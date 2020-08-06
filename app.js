@@ -1,52 +1,27 @@
-document.getElementById('button1').addEventListener('click', loadText);
-document.getElementById('button2').addEventListener('click', loadJSON);
-document.getElementById('button3').addEventListener('click', loadAPI);
+const key = 'ea131d061d228469df6ac93db8071ab5';
+//const access = 'https://cors-anywhere.herokuapp.com/';
+const url = 'api.openweathermap.org/data/2.5/weather?q=London&appid=';
+const API = 'https://docs.nomics.com/#operation/getCurrenciesTicker';
+async function getPost() {
+	const res = await fetch(API);
 
-function loadText() {
-	fetch('data.txt')
-		.then((res) => {
-			return res.text();
-		})
-		.then((data) => {
-			console.log(data);
-			document.getElementById('result').innerHTML = data;
-		});
+	const data = res.json();
+
+	return data;
 }
 
-function loadJSON() {
-	fetch('employees.json')
-		.then((res) => {
-			return res.json();
-		})
-		.then((data) => {
-			console.log(data);
-			let html = '';
-			data.forEach((employee) => {
-				html += `
-                    <li>Name: ${employee.name} - Job: ${employee.job}</li>
-                   
-                `;
+getPost().then((posts) => {
+	console.log(posts);
 
-				document.getElementById('result').innerHTML = html;
-			});
-		});
-}
+	// let html = '<div> <h2>List of Posts</h2></div>';
+	// for (i = 0; i < 5; i++) {
+	// 	const post = posts[i];
+	// 	html += `
+	//         <h3>${post.title}</h3>
+	//          <p>${post.body}</p>
+	//             `;
 
-function loadAPI() {
-	fetch('https://picsum.photos/list').then((res) => res.json()).then((images) => {
-		// console.log(data);
-		let html = '';
-		for (i = 0; i < 10; i++) {
-			console.log(images[i]);
-			const { author, post_url, author_url } = images[i];
-			console.log(author);
-			html += `
-                <li>Author: ${author}
-                <a href="${post_url}" target="/">View Image</a>
-                </li>
-            `;
-
-			document.getElementById('result').innerHTML = html;
-		}
-	});
-}
+	// 	document.getElementById('result').innerHTML = html;
+	// }
+});
+// document.addEventListener('DOMContentLoaded', getPost);
